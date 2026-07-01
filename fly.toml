@@ -1,0 +1,50 @@
+# Fly.io 应用配置 — 免费层,无信用卡要求
+# 文档: https://fly.io/docs/reference/configuration/
+
+app = "voice-studio-14ipk"  # 全局唯一,会变成 voice-studio-14ipk.fly.dev
+primary_region = "sin"      # 新加坡,国内访问快
+
+[build]
+  # 使用项目根目录的 Dockerfile
+  dockerfile = "Dockerfile"
+
+[env]
+  NODE_ENV = "production"
+  PORT = "3000"
+  # 默认 DSP 引擎(无需 API Key),在 fly console 可改为 elevenlabs/openai
+  VOICE_AI_PROVIDER = "dsp"
+  # 数据目录指向持久卷
+  DATA_DIR = "/data"
+
+[[mounts]]
+  # 1GB 持久卷 — 保存上传音色、生成结果、JSON 数据库
+  # 免费层赠送 1GB 持久卷
+  source = "voice_data"
+  destination = "/data"
+
+[http_service]
+  internal_port = 3000
+  force_https = true
+  auto_stop_machines = "stop"      # 无访问时自动停止,节省免费额度
+  auto_start_machines = true
+  min_machines_running = 0         # 允许完全停止,被访问时自动启动
+
+  [http_service.concurrency]
+    type = "connections"
+    hard_limit = 50
+    soft_limit = 25
+
+  [http_service.checks]
+    interval = "30s"
+    timeout = "5s"
+    grace_period = "40s"
+    method = "GET"
+    path = "/api/health"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256                # 最小内存,免费层够用
+
+[deploy]
+  release_command = "node -e \"console.log('Voice Studio deployed')\""
