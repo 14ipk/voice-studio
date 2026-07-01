@@ -18,6 +18,11 @@
     {
       "src": "/(.*)",
       "dest": "dist/$1"
+    },
+    {
+      "src": "/",
+      "dest": "dist/index.html"
     }
-  ]
+  ],
+  "buildCommand": "npm install && npm run build"
 }
