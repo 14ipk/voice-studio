@@ -1,0 +1,147 @@
+{
+  "voices": [
+    {
+      "id": "preset_female_01",
+      "name": "柔语·女声",
+      "tags": [
+        "预设",
+        "女声",
+        "温柔"
+      ],
+      "description": "默认预设温柔女声,适合播客旁白与有声书",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "samplePath": "uploads/samples/preset_female_01.wav",
+      "duration": 4,
+      "features": {
+        "pitch": 220,
+        "formants": [
+          850,
+          1220,
+          2810
+        ],
+        "spectralTilt": -8,
+        "breathiness": 0.4,
+        "brightness": 0.65,
+        "roughness": 0.2
+      },
+      "isFavorite": true,
+      "source": "preset",
+      "gender": "female",
+      "language": "zh-CN"
+    },
+    {
+      "id": "preset_male_01",
+      "name": "醇音·男声",
+      "tags": [
+        "预设",
+        "男声",
+        "磁性"
+      ],
+      "description": "默认预设磁性男声,适合新闻播报与广告配音",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "samplePath": "uploads/samples/preset_male_01.wav",
+      "duration": 4,
+      "features": {
+        "pitch": 120,
+        "formants": [
+          800,
+          1150,
+          2400
+        ],
+        "spectralTilt": -6,
+        "breathiness": 0.2,
+        "brightness": 0.7,
+        "roughness": 0.3
+      },
+      "isFavorite": false,
+      "source": "preset",
+      "gender": "male",
+      "language": "zh-CN"
+    },
+    {
+      "id": "preset_female_02",
+      "name": "清越·少女",
+      "tags": [
+        "预设",
+        "女声",
+        "活泼"
+      ],
+      "description": "高亢清亮的少女音色,适合游戏配音与短视频",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "samplePath": "uploads/samples/preset_female_02.wav",
+      "duration": 4,
+      "features": {
+        "pitch": 280,
+        "formants": [
+          920,
+          1380,
+          3050
+        ],
+        "spectralTilt": -10,
+        "breathiness": 0.5,
+        "brightness": 0.85,
+        "roughness": 0.15
+      },
+      "isFavorite": false,
+      "source": "preset",
+      "gender": "female",
+      "language": "zh-CN"
+    },
+    {
+      "id": "preset_male_02",
+      "name": "沉稳·大叔",
+      "tags": [
+        "预设",
+        "男声",
+        "低沉"
+      ],
+      "description": "低沉有力的成熟男声,适合纪录片解说",
+      "createdAt": "2025-01-01T00:00:00.000Z",
+      "samplePath": "uploads/samples/preset_male_02.wav",
+      "duration": 4,
+      "features": {
+        "pitch": 95,
+        "formants": [
+          740,
+          1080,
+          2250
+        ],
+        "spectralTilt": -5,
+        "breathiness": 0.15,
+        "brightness": 0.55,
+        "roughness": 0.4
+      },
+      "isFavorite": false,
+      "source": "preset",
+      "gender": "male",
+      "language": "zh-CN"
+    },
+    {
+      "id": "clone_1782836035125_e1920bbf",
+      "name": "测试男声克隆",
+      "tags": [
+        "测试",
+        "男声"
+      ],
+      "createdAt": "2026-06-30T16:13:55.125Z",
+      "samplePath": "uploads/samples/1782836033895_preset_male_01.wav",
+      "duration": 4,
+      "features": {
+        "pitch": 328,
+        "formants": [
+          129,
+          797,
+          237
+        ],
+        "spectralTilt": -9.104487194679677,
+        "breathiness": 0.25891650235280395,
+        "brightness": 0.5042726314859465,
+        "roughness": 0.26279006272088734
+      },
+      "isFavorite": false,
+      "source": "cloned",
+      "gender": "male",
+      "language": "zh-CN"
+    }
+  ]
+}

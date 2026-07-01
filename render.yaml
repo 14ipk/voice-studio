@@ -1,0 +1,50 @@
+# Render.com 部署配置 — 持久公网访问
+# 文档: https://render.com/docs/blueprint-spec
+#
+# 使用方法:
+#   1. 将本仓库推送到 GitHub/GitLab
+#   2. 在 Render.com 创建 "Blueprint" 项目,选择本仓库
+#   3. Render 会自动读取本文件创建服务
+#   4. 部署完成后获得持久公网 URL: https://<your-service>.onrender.com
+#
+# 注意: 持久磁盘 (disk) 需要付费计划 (Starter $7/月起)。
+#       免费计划无磁盘,每次重新部署上传的音色与生成结果会丢失,
+#       但应用本身仍可永久访问。预设音色不受影响 (代码内置)。
+
+services:
+  - type: web
+    name: voice-studio
+    runtime: node
+    plan: starter # starter 支持持久磁盘;free 不支持
+    region: singapore # 新加坡机房,国内访问较快
+    branch: main
+    # 构建阶段:安装全部依赖(含 devDependencies 用于 vite build)并构建前端
+    buildCommand: npm install && npm run build
+    # 运行阶段:启动 Express 单端口服务(同时托管前端 dist/ 与 API)
+    startCommand: npm start
+    # 健康检查
+    healthCheckPath: /api/health
+    autoDeploy: true
+    # 持久磁盘 — 保存上传音色、生成结果、JSON 数据库
+    disk:
+      name: voice-data
+      mountPath: /data
+      sizeGB: 1 # 1GB 足够存放大量音色与音频
+    envVars:
+      - key: NODE_ENV
+        value: production
+      # 数据目录指向持久磁盘
+      - key: DATA_DIR
+        value: /data
+      # 端口(Render 自动注入 PORT,无需手动设置)
+      # 音色引擎: dsp (默认,纯本地真实 DSP) | elevenlabs | openai | coqui
+      - key: VOICE_AI_PROVIDER
+        value: dsp
+      # === AI Provider API Keys (可选,留空则用本地 DSP) ===
+      # 填入后即可在 Render 控制台手动添加,实现顶级音色效果:
+      - key: ELEVENLABS_API_KEY
+        sync: false # 敏感值,在 Render 控制台手动填写
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: COQUI_API_KEY
+        sync: false
