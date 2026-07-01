@@ -1,5 +1,5 @@
 /**
- * Express 应用入口 — 生产环境单端口托管前端 + API
+ * Express 应用入口 — Vercel Serverless 版本
  */
 import express, {
   type Request,
@@ -17,7 +17,6 @@ import convertRoutes from './routes/convert.js'
 import ttsRoutes from './routes/tts.js'
 import outputRoutes from './routes/output.js'
 import { seedPresets } from './services/voiceService.js'
-import { ensureDirs } from './storage/fileStorage.js'
 import { getProviderStatus } from './services/aiProvider.js'
 
 const __filename = fileURLToPath(import.meta.url)
@@ -30,14 +29,6 @@ const app: express.Application = express()
 app.use(cors())
 app.use(express.json({ limit: '10mb' }))
 app.use(express.urlencoded({ extended: true, limit: '10mb' }))
-
-// 数据目录根 (生产环境用 /data, 开发环境用项目根)
-const DATA_ROOT = process.env.DATA_DIR || path.resolve(__dirname, '..')
-const ROOT = path.resolve(__dirname, '..')
-
-// 静态资源 (上传/输出文件)
-app.use('/uploads', express.static(path.join(DATA_ROOT, 'uploads')))
-app.use('/outputs', express.static(path.join(DATA_ROOT, 'outputs')))
 
 /** API 路由 */
 app.use('/api/voices', voiceRoutes)
@@ -66,7 +57,7 @@ app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
 //  生产环境: 托管前端构建产物 (dist/)
 // ============================================================
 
-const distPath = path.join(ROOT, 'dist')
+const distPath = path.join(__dirname, '..', 'dist')
 if (fs.existsSync(distPath)) {
   // 静态文件
   app.use(express.static(distPath))
@@ -86,8 +77,7 @@ if (fs.existsSync(distPath)) {
   })
 }
 
-// 启动时确保目录与预设就绪
-ensureDirs()
+// 启动时确保预设音色就绪
 seedPresets()
 
 export default app

@@ -20,6 +20,11 @@ fi
 
 # 2. 添加文件并提交
 echo "[2/4] 暂存文件..."
+# 确保 git 用户身份已配置 (仅本地仓库)
+if ! git config user.email >/dev/null 2>&1; then
+  git config user.email "voice-studio@deploy.local"
+  git config user.name "Voice Studio"
+fi
 git add -A
 if git diff --cached --quiet; then
   echo "      无新改动需要提交"

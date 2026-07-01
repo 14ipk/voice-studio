@@ -318,10 +318,6 @@ async function ttsWithAI(
  * 用真实的音色参数合成样本
  */
 export function ensurePresetSample(voice: VoiceProfile): Buffer | null {
-  const abs = resolvePath(voice.samplePath);
-  if (fs.existsSync(abs)) {
-    return fs.readFileSync(abs);
-  }
   if (voice.source !== 'preset') return null;
 
   const wav = generateVoiceSample({
@@ -333,9 +329,6 @@ export function ensurePresetSample(voice: VoiceProfile): Buffer | null {
     brightness: voice.features.brightness,
   });
   const buffer = encodeWav(wav);
-  const dir = path.dirname(abs);
-  if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
-  fs.writeFileSync(abs, buffer);
   return buffer;
 }
 
